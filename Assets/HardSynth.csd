@@ -45,7 +45,6 @@ endin
 ;causes Csound to run for about 7000 years...
 f0 z
 f 1 0 32768 10 1
-i1 0 2 7.00 0.2 1
 ;i99 0 z
 </CsScore>
 </CsoundSynthesizer>
