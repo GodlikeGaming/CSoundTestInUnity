@@ -1,7 +1,7 @@
 <CsoundSynthesizer>
 <CsOptions>
 -odac
--n -d -+rtmidi=NULL -M0 -m0d --midi-key-cps=4 --midi-velocity-amp=5
+-+rtmidi=NULL -M0
 </CsOptions>
 <CsInstruments>
 ; Initialize the global variables. 
