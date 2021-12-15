@@ -296,188 +296,114 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &976972447
-GameObject:
+--- !u!1001 &944181530489157228
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 976972450}
-  - component: {fileID: 976972449}
-  - component: {fileID: 976972448}
-  - component: {fileID: 976972451}
-  m_Layer: 0
-  m_Name: Synth
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &976972448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 976972447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d20258c641c94f0ea3dc32cfe3de904, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logCsoundOutput: 0
-  mute: 0
-  processClipAudio: 0
-  loudVolumeWarning: 1
-  loudWarningThreshold: 10
-  csoundScore: 
-  _csoundFileGUID: 25beaabf60fa3154aa5634d260067569
-  _csoundString: "<CsoundSynthesizer>\r\n<CsOptions>\r\n; Select audio/midi flags
-    here according to platform\r\n-odac     ;;;realtime audio out\r\n;-iadc    ;;;uncomment
-    -iadc if RT audio input is needed too\r\n; For Non-realtime ouput leave only
-    the line below:\r\n; -o timedseq.wav -W ;;; for file output any platform\r\n</CsOptions>\r\n<CsInstruments>\r\n\r\nsr
-    = 44100\r\nksmps = 32\r\nnchnls = 2\r\n0dbfs  = 1\r\n\r\nga1 init 0\r\n\r\ninstr
-    1\r\n    asig vco2 p5, p4\r\n    ; out aOut, aOut\r\n    a1 clfilt asig, 500,
-    0, 10\r\n    outs a1, a1\r\n    ga1 += a1  \r\n\r\n\r\n;   ihold\r\n\r\n;   ;
-    If p4 equals 0, turn the note off.\r\n;   if (p6 == 0) kgoto offnow\r\n;    
-    kgoto playit\r\n\r\n; offnow:\r\n;   ; Turn the note off now.\r\n;   turnoff\r\n\r\n;
-    playit:\r\n;   ; Play the note.\r\n;   out aOut, aOut\r\n\r\nendin \r\n\r\n\r\n;
-    instr 99\t;(highest instr number executed last)\r\n\r\n; arev reverb ga1, 0.5\r\n;    
-    outs arev, arev \r\n  \r\n; ga1  = 0\t;clear\r\n; endin\r\n\r\n\r\n</CsInstruments>\r\n<CsScore>\r\nf0
-    [60*60*24*7]\r\ni99 0 [60*60*24*7]\r\n;i1 2 1 400 \r\n; i 1 0 4 120\r\n; i 1
-    0 4 240\r\n; i 1 + . 480\r\n; i 1 + . -480\t;when negative it plays backwards
-    \r\n</CsScore>\r\n</CsoundSynthesizer>"
-  _csoundFileName: SimpleSynth.csd
-  _csoundAsset: {fileID: 102900000, guid: 25beaabf60fa3154aa5634d260067569, type: 3}
-  _channels: []
-  _availableAudioChannels: []
-  _drawCsoundString: 0
-  _drawTestScore: 0
-  _drawSettings: 0
-  _drawChannels: 0
-  _drawAudioChannels: 0
---- !u!82 &976972449
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 976972447}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: _csoundString
+      value: "<CsoundSynthesizer>\r\n<CsOptions>\r\n-odac\r\n-n -d -+rtmidi=NULL
+        -M0 -m0d --midi-key-cps=4 --midi-velocity-amp=5\r\n</CsOptions>\r\n<CsInstruments>\r\n;
+        Initialize the global variables. \r\nksmps = 32\r\nnchnls = 2\r\n0dbfs =
+        1\r\n\r\nga1 init 0 \r\n;instrument will be triggered by keyboard widget\r\ninstr
+        1\r\n    ; klfo line 0, 3, 20\r\n    ; al   lfo klfo, 5, 0\r\n    \r\n   
+        ;aOut poscil p5, cpspch(p4), 1 ;+al, 1\r\n    ;print(al)\r\n    aOut vco2
+        p5, cpspch(p4)\r\n    \r\n    kEnv madsr 0.01, .05, .6, .1\r\n    \r\n   
+        ;a1 clfilt aOut*kEnv, 500, 0, 10\r\n    \r\n    outs aOut * kEnv, aOut *kEnv\r\n   
+        ; outs aOut*kEnv, aOut*kEnv\r\n\r\n   ; ga1 += a1 \r\n\r\nendin\r\n\r\n\r\n\r\n;
+        instr 99\t;(highest instr number executed last)\r\n\r\n; arev reverb ga1,
+        1\r\n;     outs arev, arev \r\n  \r\n; ga1  = 0\t;clear\r\n; endin\r\n\r\n</CsInstruments>\r\n<CsScore>\r\n;causes
+        Csound to run for about 7000 years...\r\nf0 z\r\nf 1 0 32768 10 1\r\ni1 0
+        2 7.00 0.2 1\r\n;i99 0 z\r\n</CsScore>\r\n</CsoundSynthesizer>"
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: _csoundFileGUID
+      value: 7617f45d36f2ca240a810a521f5c81e8
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: _csoundFileName
+      value: HardSynth.csd
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: _drawTestScore
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: _drawCsoundString
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &976972450
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 976972447}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &976972451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 976972447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21a770fb8ba26d742bc6cc5eeb25c752, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  played_notes: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720525, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720563, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: m_Name
+      value: Synth
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c, type: 3}

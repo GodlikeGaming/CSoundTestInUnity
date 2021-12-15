@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SynthController : MonoBehaviour
 {
@@ -23,62 +25,123 @@ public class SynthController : MonoBehaviour
     };
 
 
-    public List<int> played_notes = new List<int>();
+    //public List<int> played_notes = new List<int>();
+    public Dictionary<int, int> played_notes = new Dictionary<int, int>();
     CsoundUnity csound;
     NumberFormatInfo nfi;
+
+    List<InputAction> keyActions = new List<InputAction>();
     private void Start()
     {
+        var UUID = 0;
+        for (int i = 0; i < 127; i++)
+        {
+            played_notes[i] = (UUID++);
+        }
+
         for (int i = 0; i < frequencies.Length; i++)
         {
-            frequencies[i] /= 2;
+            frequencies[i] /= 8;
         }
 
         nfi = new NumberFormatInfo();
         nfi.NumberDecimalSeparator = ".";
 
         csound = GetComponent<CsoundUnity>();
+
+        
         if (!csound.CompiledWithoutError())
         {
             Debug.Log(csound.GetSpout());
+        }
+
+        for (int i = 21; i < 127; i++)
+        {
+            var stringOfNote = i / 100 >= 1 ? $"{i}" : $"0{i}";
+            var myAction = new InputAction(binding: $"MidiDevice*/note{stringOfNote}");
+            myAction.Enable();
+            myAction.started += ctx =>
+            {
+                // play note
+                var note = int.Parse(ctx.control.name.Substring(4, 3));
+                var velocity = (float)ctx.ReadValueAsObject();
+
+                Debug.Log($"start {note} with v: {velocity}");
+                PlayNote(note, velocity);
+            };
+            myAction.canceled += ctx =>
+            {
+                // stop note
+                var note = int.Parse(ctx.control.name.Substring(4, 3));
+                var velocity = (float)ctx.ReadValueAsObject();
+
+                Debug.Log($"stop {note} with v: {velocity}");
+                StopNote(note);
+            };
+            keyActions.Add(myAction);
         }
     }
     void Update()
     {
 
 
-        checkForKey(KeyCode.A, 0);
-        checkForKey(KeyCode.W, 1);
-        checkForKey(KeyCode.S, 2);
-        checkForKey(KeyCode.E, 3);
-        checkForKey(KeyCode.D, 4);
-        checkForKey(KeyCode.F, 5);
-        checkForKey(KeyCode.T, 6);
-        checkForKey(KeyCode.G, 7);
-        checkForKey(KeyCode.Y, 8);
-        checkForKey(KeyCode.H, 9);
-        checkForKey(KeyCode.U, 10);
-        checkForKey(KeyCode.J, 11);
-        checkForKey(KeyCode.K, 12);
+        checkForKey(Key.A, 0);
+        checkForKey(Key.W, 1);
+        checkForKey(Key.S, 2);
+        checkForKey(Key.E, 3);
+        checkForKey(Key.D, 4);
+        checkForKey(Key.F, 5);
+        checkForKey(Key.T, 6);
+        checkForKey(Key.G, 7);
+        checkForKey(Key.Y, 8);
+        checkForKey(Key.H, 9);
+        checkForKey(Key.U, 10);
+        checkForKey(Key.J, 11);
+        checkForKey(Key.K, 12);
         //checkForKey(KeyCode.A, 0);
         //checkForKey(KeyCode.A, 0);
 
+        //for (int i = 0; i < 127;i++)
+        //{
+        //    if (MidiJack.MidiMaster.GetKeyDown(MidiJack.MidiChannel.All, i))
+        //    {
+        //        PlayNote(i);
+        //    }  
+        //    if (MidiJack.MidiMaster.GetKeyUp(MidiJack.MidiChannel.All, i))
+        //    {
+        //        StopNote(i);
+        //    }
+        //}
+       // myAction.Enable();
     }
-    void checkForKey(KeyCode code, int note)
+    void checkForKey(Key code, float note)
     {
-        if (Input.GetKeyDown(code))
+        note += 12 * 5;
+        if (Keyboard.current[code].wasPressedThisFrame)
         {
-            var str = $"i1 0 0.5 {frequencies[note].ToString(nfi)} 0.1 1";
-            played_notes.Add(note);
-            Debug.Log(str);
-            csound.SendScoreEvent(str);
+            PlayNote(note, 0.5f);
             //csound.Se
         }
-        else if (Input.GetKeyUp(code))
+        if (Keyboard.current[code].wasReleasedThisFrame)
         {
-            //var str = $"i1 0 0.2 {frequencies[note].ToString(nfi)} 0.1 0";
-            //played_notes.Remove(note);
-            //Debug.Log(str);
-            //csound.SendScoreEvent(str);
+            StopNote(note);
         }
+    }
+
+    void PlayNote(float note, float velocity)
+    {
+        var octave = Math.Floor(note / 12) + 2;
+        var id = played_notes[(int)note];
+        var str = $"i1.{id} 0 -1 {(octave + (note % 12) / 100).ToString(nfi)} {velocity.ToString(nfi)} 1";
+        Debug.Log(str);
+        csound.SendScoreEvent(str);
+    }
+
+    void StopNote(float note)
+    {
+        var id = played_notes[(int)note];
+        var str = $"i-1.{id} 0 1 {(8.0f + (note % 12) / 100).ToString(nfi)} 0.1 0";
+        Debug.Log(str);
+        csound.SendScoreEvent(str);
     }
 }

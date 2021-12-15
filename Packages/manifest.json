@@ -1,5 +1,13 @@
 {
+  "scopedRegistries": [
+    {
+      "name": "Keijiro",
+      "url": "https://registry.npmjs.com",
+      "scopes": [ "jp.keijiro" ]
+    }
+  ],
   "dependencies": {
+    "jp.keijiro.minis": "1.0.10",
     "com.csound.csoundunity": "https://github.com/rorywalsh/CsoundUnity.git#develop",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
