@@ -22,8 +22,11 @@ instr 1
     kEnv madsr 0.01, .05, .6, .1
     
     ;a1 clfilt aOut*kEnv, 500, 0, 10
+    a1 clfilt aOut*kEnv, 500, 0, 10
     
-    outs aOut * kEnv, aOut *kEnv
+        outs a1, a1
+
+
     ; outs aOut*kEnv, aOut*kEnv
 
    ; ga1 += a1 
@@ -44,6 +47,7 @@ endin
 <CsScore>
 ;causes Csound to run for about 7000 years...
 f0 z
+
 f 1 0 32768 10 1
 ;i99 0 z
 </CsScore>

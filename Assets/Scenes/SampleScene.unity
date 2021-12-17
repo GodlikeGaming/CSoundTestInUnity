@@ -343,6 +343,187 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &863515353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 863515357}
+  - component: {fileID: 863515356}
+  - component: {fileID: 863515355}
+  - component: {fileID: 863515354}
+  m_Layer: 0
+  m_Name: Sequencer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &863515354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863515353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a01420823804541bcc287ef428a85f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BPM: 70
+--- !u!114 &863515355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863515353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d20258c641c94f0ea3dc32cfe3de904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logCsoundOutput: 0
+  mute: 0
+  processClipAudio: 0
+  loudVolumeWarning: 1
+  loudWarningThreshold: 10
+  csoundScore: 
+  _csoundFileGUID: 25beaabf60fa3154aa5634d260067569
+  _csoundString: "<CsoundSynthesizer>\r\n<CsOptions>\r\n-odac\r\n-+rtmidi=NULL -M0\r\n</CsOptions>\r\n<CsInstruments>\r\n;
+    Initialize the global variables. \r\nksmps = 32\r\nnchnls = 2\r\n0dbfs = 1\r\n\r\nga1
+    init 0 \r\n\r\n;instrument will be triggered by keyboard widget\r\ninstr 1\r\n   
+    klfo line 0, 3, 20\r\n    al   lfo klfo, 5, 0\r\n    \r\n    aOut poscil p5,
+    cpspch(p4)+al, 1\r\n    ;print(al)\r\n    ;aOut vco2 p5, cpspch(p4)\r\n    \r\n   
+    kEnv madsr .1, .05, .6, .1\r\n    \r\n    a1 clfilt aOut*kEnv, 500, 0, 10\r\n   
+    \r\n        outs a1, a1\r\n    ; outs aOut*kEnv, aOut*kEnv\r\n\r\n    ga1 +=
+    a1 \r\n\r\nendin\r\n\r\n\r\n; instr 99\t;(highest instr number executed last)\r\n\r\n;
+    arev reverb ga1, 1\r\n;     outs arev, arev \r\n  \r\n; ga1  = 0\t;clear\r\n;
+    endin\r\n\r\n</CsInstruments>\r\n<CsScore>\r\n;causes Csound to run for about
+    7000 years...\r\nf0 z\r\nt 0 120\r\nf 1 0 32768 10 1\r\ni99 0 z\r\n</CsScore>\r\n</CsoundSynthesizer>"
+  _csoundFileName: SoftSynth.csd
+  _csoundAsset: {fileID: 102900000, guid: 25beaabf60fa3154aa5634d260067569, type: 3}
+  _channels: []
+  _availableAudioChannels: []
+  _drawCsoundString: 0
+  _drawTestScore: 0
+  _drawSettings: 0
+  _drawChannels: 0
+  _drawAudioChannels: 0
+--- !u!82 &863515356
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863515353}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &863515357
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863515353}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.88233, y: -4.3319817, z: -0.27487713}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!850595691 &873508784
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -497,19 +678,17 @@ PrefabInstance:
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
       propertyPath: _csoundString
-      value: "<CsoundSynthesizer>\r\n<CsOptions>\r\n-odac\r\n-n -d -+rtmidi=NULL
-        -M0 -m0d --midi-key-cps=4 --midi-velocity-amp=5\r\n</CsOptions>\r\n<CsInstruments>\r\n;
+      value: "<CsoundSynthesizer>\r\n<CsOptions>\r\n-odac\r\n-+rtmidi=NULL -M0\r\n</CsOptions>\r\n<CsInstruments>\r\n;
         Initialize the global variables. \r\nksmps = 32\r\nnchnls = 2\r\n0dbfs =
-        1\r\n\r\nga1 init 0 \r\n;instrument will be triggered by keyboard widget\r\ninstr
-        1\r\n    ; klfo line 0, 3, 20\r\n    ; al   lfo klfo, 5, 0\r\n    \r\n   
-        ;aOut poscil p5, cpspch(p4), 1 ;+al, 1\r\n    ;print(al)\r\n    aOut vco2
-        p5, cpspch(p4)\r\n    \r\n    kEnv madsr 0.01, .05, .6, .1\r\n    \r\n   
-        ;a1 clfilt aOut*kEnv, 500, 0, 10\r\n    \r\n    outs aOut * kEnv, aOut *kEnv\r\n   
-        ; outs aOut*kEnv, aOut*kEnv\r\n\r\n   ; ga1 += a1 \r\n\r\nendin\r\n\r\n\r\n\r\n;
-        instr 99\t;(highest instr number executed last)\r\n\r\n; arev reverb ga1,
-        1\r\n;     outs arev, arev \r\n  \r\n; ga1  = 0\t;clear\r\n; endin\r\n\r\n</CsInstruments>\r\n<CsScore>\r\n;causes
-        Csound to run for about 7000 years...\r\nf0 z\r\nf 1 0 32768 10 1\r\n;i99
-        0 z\r\n</CsScore>\r\n</CsoundSynthesizer>"
+        1\r\n\r\nga1 init 0 \r\n\r\n;instrument will be triggered by keyboard widget\r\ninstr
+        1\r\n    klfo line 0, 3, 20\r\n    al   lfo klfo, 5, 0\r\n    \r\n    aOut
+        poscil p5, cpspch(p4)+al, 1\r\n    ;print(al)\r\n    ;aOut vco2 p5, cpspch(p4)\r\n   
+        \r\n    kEnv madsr .1, .05, .6, .1\r\n    \r\n    a1 clfilt aOut*kEnv, 500,
+        0, 10\r\n    \r\n        outs a1, a1\r\n    ; outs aOut*kEnv, aOut*kEnv\r\n\r\n   
+        ga1 += aOut*kEnv * p6\r\n\r\nendin\r\n\r\n\r\ninstr 99\t;(highest instr number
+        executed last)\r\n\r\narev reverb ga1, 1\r\n    outs arev, arev \r\n  \r\nga1 
+        = 0\t;clear\r\nendin\r\n\r\n</CsInstruments>\r\n<CsScore>\r\n;causes Csound
+        to run for about 7000 years...\r\nf0 z\r\nf 1 0 32768 10 1\r\ni99 0 z\r\n</CsScore>\r\n</CsoundSynthesizer>"
       objectReference: {fileID: 0}
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
@@ -529,7 +708,7 @@ PrefabInstance:
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
       propertyPath: _csoundFileName
-      value: HardSynth.csd
+      value: SoftSynth.csd
       objectReference: {fileID: 0}
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}

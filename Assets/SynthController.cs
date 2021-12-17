@@ -132,7 +132,7 @@ public class SynthController : MonoBehaviour
     {
         var octave = Math.Floor(note / 12) + 2;
         var id = played_notes[(int)note];
-        var str = $"i1.{id} 0 -1 {(octave + (note % 12) / 100).ToString(nfi)} {velocity.ToString(nfi)} 1";
+        var str = $"i1.{id} 0 -1 {(octave + (note % 12) / 100).ToString(nfi)} {velocity.ToString(nfi)} 0";
         Debug.Log(str);
         csound.SendScoreEvent(str);
     }

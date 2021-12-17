@@ -27,18 +27,18 @@ instr 1
         outs a1, a1
     ; outs aOut*kEnv, aOut*kEnv
 
-    ga1 += a1 
+    ga1 += a1 * p6
 
 endin
 
 
-; instr 99	;(highest instr number executed last)
+instr 99	;(highest instr number executed last)
 
-; arev reverb ga1, 1
-;     outs arev, arev 
+arev reverb ga1, 1
+    outs arev, arev 
   
-; ga1  = 0	;clear
-; endin
+ga1  = 0	;clear
+endin
 
 </CsInstruments>
 <CsScore>
