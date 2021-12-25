@@ -26,6 +26,8 @@ public class SynthController : MonoBehaviour
 
 
     //public List<int> played_notes = new List<int>();
+    public float velocity = 0.5f;
+    public float reverbWetAmount = 0.2f;
     public Dictionary<int, int> played_notes = new Dictionary<int, int>();
     CsoundUnity csound;
     NumberFormatInfo nfi;
@@ -64,10 +66,10 @@ public class SynthController : MonoBehaviour
             {
                 // play note
                 var note = int.Parse(ctx.control.name.Substring(4, 3));
-                var velocity = (float)ctx.ReadValueAsObject();
+                //var velocity = (float)ctx.ReadValueAsObject();
 
                 Debug.Log($"start {note} with v: {velocity}");
-                PlayNote(note, velocity);
+                PlayNote(note, velocity, -1f, reverbWetAmount);
             };
             myAction.canceled += ctx =>
             {
@@ -119,7 +121,7 @@ public class SynthController : MonoBehaviour
         note += 12 * 5;
         if (Keyboard.current[code].wasPressedThisFrame)
         {
-            PlayNote(note, 0.5f);
+            PlayNote(note, 0.5f, velocity, reverbWetAmount);
             //csound.Se
         }
         if (Keyboard.current[code].wasReleasedThisFrame)
@@ -128,17 +130,20 @@ public class SynthController : MonoBehaviour
         }
     }
 
-    void PlayNote(float note, float velocity)
+    void PlayNote(float note, float velocity, float secDuration = -1, float reverbWetAmount = 0f)
     {
         var octave = Math.Floor(note / 12) + 2;
         var id = played_notes[(int)note];
-        var str = $"i1.{id} 0 -1 {(octave + (note % 12) / 100).ToString(nfi)} {velocity.ToString(nfi)} 0";
+
+
+        var str = $"i1.{id} 0 {(secDuration).ToString(nfi)} {(octave + (note % 12) / 100).ToString(nfi)} {velocity.ToString(nfi)} {reverbWetAmount.ToString(nfi)}";
         Debug.Log(str);
         csound.SendScoreEvent(str);
     }
 
     void StopNote(float note)
     {
+        var octave = Math.Floor(note / 12) + 2;
         var id = played_notes[(int)note];
         var str = $"i-1.{id} 0 1 {(8.0f + (note % 12) / 100).ToString(nfi)} 0.1 0";
         Debug.Log(str);
