@@ -118,10 +118,10 @@ public class SynthController : MonoBehaviour
     }
     void checkForKey(Key code, float note)
     {
-        note += 12 * 5;
+        note += 12 * 6;
         if (Keyboard.current[code].wasPressedThisFrame)
         {
-            PlayNote(note, 0.5f, velocity, reverbWetAmount);
+            PlayNote(note, velocity, -1, reverbWetAmount);
             //csound.Se
         }
         if (Keyboard.current[code].wasReleasedThisFrame)
