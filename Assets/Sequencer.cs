@@ -30,7 +30,22 @@ public class Sequencer : MonoBehaviour
         }
     }
 
-    public List<NoteRecord> lst = new List<NoteRecord>()
+    public List<NoteRecord> lst;
+
+    private void Start()
+    {
+        var UUID = 0;
+        for (int i = 0; i < 127; i++)
+        {
+            played_notes[i] = (UUID++);
+        }
+        csound = GetComponent<CsoundUnity>();
+
+        nfi = new NumberFormatInfo();
+        nfi.NumberDecimalSeparator = ".";
+
+
+        lst =  new List<NoteRecord>()
     {
         new NoteRecord(64, 0.2f, 0.2f, 0f),
         new NoteRecord(68, 0.2f, 0.2f, 0f),
@@ -47,24 +62,9 @@ public class Sequencer : MonoBehaviour
         new NoteRecord(0, 0.0f, 0.0f, 4f)
     };
 
-    private void Start()
-    {
-        var UUID = 0;
-        for (int i = 0; i < 127; i++)
-        {
-            played_notes[i] = (UUID++);
-        }
-        csound = GetComponent<CsoundUnity>();
 
-        nfi = new NumberFormatInfo();
-        nfi.NumberDecimalSeparator = ".";
-
-
-
-
-
-        //StartCoroutine(PlaySequenceFromList(lst));
-        StartCoroutine(PlaySequence());
+        StartCoroutine(PlaySequenceFromList(lst));
+        //StartCoroutine(PlaySequence());
     }
 
     // Update is called once per frame
@@ -82,9 +82,10 @@ public class Sequencer : MonoBehaviour
 
         var bpmScale = BPM / 60;
         var currentTime = 0f;
-        var reverbWetAmount = 0f;
+        var reverbWetAmount = 0.1f;
 
-        while (false) { 
+        Debug.Log(sequence.Count);
+        while (true) { 
             for (int i = 0; i < sequence.Count; i++)
             {
                 var item = sequence[i];
