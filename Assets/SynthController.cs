@@ -33,8 +33,12 @@ public class SynthController : MonoBehaviour
     NumberFormatInfo nfi;
 
     List<InputAction> keyActions = new List<InputAction>();
+    public Recorder recorder = new Recorder();
+
+    Sequencer globalSequencer;
     private void Start()
     {
+        globalSequencer = FindObjectOfType<Sequencer>();
         var UUID = 0;
         for (int i = 0; i < 127; i++)
         {
@@ -69,7 +73,8 @@ public class SynthController : MonoBehaviour
                 //var velocity = (float)ctx.ReadValueAsObject();
 
                 Debug.Log($"start {note} with v: {velocity}");
-                PlayNote(note, velocity, -1f, reverbWetAmount);
+                NoteRecord noteRecord = new NoteRecord(note, velocity, -1, 0, reverbWetAmount);
+                PlayNote(noteRecord);
             };
             myAction.canceled += ctx =>
             {
@@ -83,9 +88,21 @@ public class SynthController : MonoBehaviour
             keyActions.Add(myAction);
         }
     }
+
+
     void Update()
     {
 
+        if (Keyboard.current[Key.R].wasPressedThisFrame)
+        {
+            Debug.Log("Hit record button");
+            var sequence = recorder.HitRecord();
+
+            if (sequence != null)
+            {
+                globalSequencer.RepeatSequence(sequence);
+            }
+        }
 
         checkForKey(Key.A, 0);
         checkForKey(Key.W, 1);
@@ -121,7 +138,8 @@ public class SynthController : MonoBehaviour
         note += 12 * 6;
         if (Keyboard.current[code].wasPressedThisFrame)
         {
-            PlayNote(note, velocity, -1, reverbWetAmount);
+            NoteRecord noteRecord = new NoteRecord(note, velocity, -1, 0, reverbWetAmount);
+            PlayNote(noteRecord);
             //csound.Se
         }
         if (Keyboard.current[code].wasReleasedThisFrame)
@@ -130,8 +148,16 @@ public class SynthController : MonoBehaviour
         }
     }
 
-    void PlayNote(float note, float velocity, float secDuration = -1, float reverbWetAmount = 0f)
+    void PlayNote(NoteRecord noteRecord)
     {
+        // record note
+        recorder.PlayNote(noteRecord);
+
+        float note = noteRecord.Note;
+        float velocity = noteRecord.Velocity;
+        float secDuration = -1f;
+        float reverbWetAmount = noteRecord.ReverbAmount;
+
         var octave = Math.Floor(note / 12) + 2;
         var id = played_notes[(int)note];
 
@@ -143,6 +169,7 @@ public class SynthController : MonoBehaviour
 
     void StopNote(float note)
     {
+        recorder.StopNote(note);
         var octave = Math.Floor(note / 12) + 2;
         var id = played_notes[(int)note];
         var str = $"i-1.{id} 0 1 {(8.0f + (note % 12) / 100).ToString(nfi)} 0.1 0";

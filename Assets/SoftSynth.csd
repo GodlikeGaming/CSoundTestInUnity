@@ -17,7 +17,21 @@ instr 1
     al   lfo klfo, 5, 0
     iwetamt = p6
     idryamt = 1 - p6 
-    //aOut poscil p5, cpspch(p4)+al, 1
+    ; //aOut poscil p5, cpspch(p4)+al, 1
+
+    ;;;; START SETUP VIBRATO ;;;;;
+    ; kaverageamp     init .5
+    ; kaveragefreq    init 5
+    ; krandamountamp  line 15, .01, 20			;increase random amplitude of vibrato
+    ; krandamountfreq init .3
+    ; kampminrate init 3
+    ; kampmaxrate init 5
+    ; kcpsminrate init 3
+    ; kcpsmaxrate init 5
+    ; kvib vibrato kaverageamp, kaveragefreq, krandamountamp, krandamountfreq, kampminrate, kampmaxrate, kcpsminrate, kcpsmaxrate, 1
+    ;;;; END SETUP VIBRATO ;;;;;
+
+
     aOut poscil p5, cpspch(p4)+al, 1
     ;print(al)
     ;aOut vco2 p5, cpspch(p4)
@@ -54,7 +68,7 @@ endin
 <CsScore>
 ;causes Csound to run for about 7000 years...
 f0 z
-f 1 0 32768 10 1
+f 1 0 32768 10 1 ; create sine wave table used by the vibrato
 i99 0 z
 </CsScore>
 </CsoundSynthesizer>

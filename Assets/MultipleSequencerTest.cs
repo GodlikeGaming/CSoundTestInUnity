@@ -14,11 +14,11 @@ public class MultipleSequencerTest : MonoBehaviour
             var sequencerScript = obj.GetComponent<Sequencer>();
 
             var notes = new int[] { 64, 68, 71, 73, 76};
-            sequencerScript.lst = new List<Sequencer.NoteRecord>()
+            sequencerScript.lst = new List<NoteRecord>()
             {
-                new Sequencer.NoteRecord(notes[Random.Range(0, notes.Length)], 0.2f, 0.2f, Random.Range(0f, 15f)),
+                new NoteRecord(notes[Random.Range(0, notes.Length)], 0.2f, 0.2f, Random.Range(0f, 15f)),
 
-                new Sequencer.NoteRecord(0, 0.0f, 0.0f, 16f)
+                new NoteRecord(0, 0.0f, 0.0f, 16f)
             };
         }
     }

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Sequencer : MonoBehaviour
 {
@@ -13,22 +14,7 @@ public class Sequencer : MonoBehaviour
     NumberFormatInfo nfi;
 
     public float BPM = 120;
-   [Serializable]
-    public class NoteRecord
-    {
-        public float Note { get; set; }
-        public float Velocity { get; set; }
-        public float Duration { get; set; }
-        public float StartTime { get; set; }
-
-        public NoteRecord(float note, float velocity, float duration, float startTime)
-        {
-            Note = note;
-            Velocity = velocity;
-            Duration = duration;
-            StartTime = startTime;
-        }
-    }
+    
 
     public List<NoteRecord> lst;
 
@@ -48,29 +34,29 @@ public class Sequencer : MonoBehaviour
         lst =  new List<NoteRecord>()
     {
         new NoteRecord(64, 0.2f, 0.2f, 0f),
-        new NoteRecord(68, 0.2f, 0.2f, 0f),
-        new NoteRecord(71, 0.2f, 0.2f, 0f),
+        new NoteRecord(68, 0.2f, 0.2f, 0.25f),
+        new NoteRecord(71, 0.2f, 0.2f, 0.5f),
         new NoteRecord(64, 0.2f, 0.2f, 1f),
-        new NoteRecord(68, 0.2f, 0.2f, 1f),
-        new NoteRecord(71, 0.2f, 0.2f, 1f),
+        new NoteRecord(68, 0.2f, 0.2f, 1.25f),
+        new NoteRecord(71, 0.2f, 0.2f, 1.5f),
         new NoteRecord(69, 0.2f, 0.2f, 2f),
-        new NoteRecord(73, 0.2f, 0.2f, 2f),
-        new NoteRecord(76, 0.2f, 0.2f, 2f),
+        new NoteRecord(73, 0.2f, 0.2f, 2.25f),
+        new NoteRecord(76, 0.2f, 0.2f, 2.5f),
         new NoteRecord(69, 0.2f, 0.2f, 3f),
-        new NoteRecord(73, 0.2f, 0.2f, 3f),
-        new NoteRecord(76, 0.2f, 0.2f, 3f),
+        new NoteRecord(73, 0.2f, 0.2f, 3.25f),
+        new NoteRecord(76, 0.2f, 0.2f, 3.5f),
         new NoteRecord(0, 0.0f, 0.0f, 4f)
     };
 
 
-        StartCoroutine(PlaySequenceFromList(lst));
+        //StartCoroutine(PlaySequenceFromList(lst));
         //StartCoroutine(PlaySequence());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // check if record button is hit
     }
 
     IEnumerator PlaySequenceFromList(List<NoteRecord> sequence)
@@ -109,6 +95,12 @@ public class Sequencer : MonoBehaviour
         }
 
     }
+
+    internal void RepeatSequence(List<NoteRecord> sequence)
+    {
+        StartCoroutine(PlaySequenceFromList(sequence));
+    }
+
     IEnumerator PlaySequence()
     {
         while (!csound.IsInitialized)
