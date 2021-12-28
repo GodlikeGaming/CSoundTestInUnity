@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Recorder 
 {
-    public List<NoteRecord> sequence;
+    public List<NoteRecord> sequence = new List<NoteRecord>();
     public bool isRecording = false;
 
     public float startTime = 0f;
@@ -25,12 +25,14 @@ public class Recorder
 
     private List<NoteRecord> StopRecording()
     {
+        isRecording = false;
         return sequence;
     }
 
     private void StartRecording()
     {
         startTime = Time.time;
+        isRecording = true;
     }
 
     internal void PlayNote(NoteRecord noteRecord)
@@ -47,7 +49,7 @@ public class Recorder
             );
 
         playingNotes.Add((int)noteRecord.Note, newNoteRecord);
-        sequence.Add(noteRecord);
+        sequence.Add(newNoteRecord);
     }
 
     internal void StopNote(float note)
@@ -57,6 +59,7 @@ public class Recorder
 
         var noteRecord = playingNotes[(int)note];
         noteRecord.Duration = noteRecord.StartTime + (currentTime - startTime);
-        
+
+        playingNotes.Remove((int)note);
     }
 }

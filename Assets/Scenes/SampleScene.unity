@@ -514,6 +514,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
+      propertyPath: csoundScore
+      value: 'i1 0 1 '
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
       propertyPath: _csoundString
       value: "<CsoundSynthesizer>\r\n<CsOptions>\r\n-odac\r\n-+rtmidi=NULL -M0\r\n</CsOptions>\r\n<CsInstruments>\r\n;
         Initialize the global variables. \r\nksmps = 32\r\nnchnls = 2\r\n0dbfs =
@@ -572,8 +577,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 944181529585720525, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720525, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
       propertyPath: m_PlayOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720525, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 944181529585720526, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
