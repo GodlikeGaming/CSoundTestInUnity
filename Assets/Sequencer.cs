@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -33,23 +35,18 @@ public class Sequencer : MonoBehaviour
 
         lst =  new List<NoteRecord>()
     {
-        new NoteRecord(64, 0.2f, 0.2f, 0f),
-        new NoteRecord(68, 0.2f, 0.2f, 0.25f),
-        new NoteRecord(71, 0.2f, 0.2f, 0.5f),
-        new NoteRecord(64, 0.2f, 0.2f, 1f),
-        new NoteRecord(68, 0.2f, 0.2f, 1.25f),
-        new NoteRecord(71, 0.2f, 0.2f, 1.5f),
-        new NoteRecord(69, 0.2f, 0.2f, 2f),
-        new NoteRecord(73, 0.2f, 0.2f, 2.25f),
-        new NoteRecord(76, 0.2f, 0.2f, 2.5f),
-        new NoteRecord(69, 0.2f, 0.2f, 3f),
-        new NoteRecord(73, 0.2f, 0.2f, 3.25f),
-        new NoteRecord(76, 0.2f, 0.2f, 3.5f),
-        new NoteRecord(0, 0.0f, 0.0f, 4f)
+        new NoteRecord(60, 0.1f, 0.2f, 0f),
+        new NoteRecord(60, 0.1f, 0.2f, 1f),
+        new NoteRecord(60, 0.1f, 0.2f, 2f),
+        new NoteRecord(60, 0.1f, 0.2f, 3f),
+        new NoteRecord(00, 0f, 0, 4f),
     };
 
-
-        //StartCoroutine(PlaySequenceFromList(lst));
+        for (int i = 0; i < 100; i++)
+        {
+            PlayNote(60, 0.1f, 0.2f, 0f, i);
+        }
+       // StartCoroutine(PlaySequenceFromList(lst));
         //StartCoroutine(PlaySequence());
     }
 
@@ -61,6 +58,9 @@ public class Sequencer : MonoBehaviour
 
     IEnumerator PlaySequenceFromList(List<NoteRecord> sequence)
     {
+        if (sequence == null) {
+            yield break;
+        }
         while (!csound.IsInitialized)
         {
             yield return null; //waiting for initialization
@@ -71,7 +71,8 @@ public class Sequencer : MonoBehaviour
         var reverbWetAmount = 0.1f;
 
         Debug.Log(sequence.Count);
-        while (true) { 
+        while (true) {
+            yield return new WaitForSeconds(sequence.First().StartTime);
             for (int i = 0; i < sequence.Count; i++)
             {
                 var item = sequence[i];
@@ -83,22 +84,51 @@ public class Sequencer : MonoBehaviour
                 if (i == sequence.Count - 1)
                 {
                     PlayNote(note, velocity, secDuration, reverbWetAmount);
-                    yield return new WaitForSeconds(secDuration / bpmScale);
+                    var waitUntillNext = secDuration / bpmScale;
+
+                    var totalWait = waitUntillNext;
+                    Debug.Log($"untill next tone: {totalWait}");
+                    yield return new WaitForSeconds(totalWait);
                 } else
                 {
                     var nextStartTime = sequence[i + 1].StartTime;
-                    Debug.Log($"untill next tone: {nextStartTime - currentTime}");
+                    
                     PlayNote(note, velocity, secDuration, reverbWetAmount);
-                    yield return new WaitForSeconds((nextStartTime - currentTime)/ bpmScale);
+                    var waitUntillNext = (nextStartTime - currentTime) / bpmScale;
+                    
+                    var totalWait = waitUntillNext;
+                    
+                    Debug.Log($"untill next tone: {totalWait}");
+                    yield return new WaitForSeconds(totalWait);
                 }
             }
         }
-
+        Debug.Log("sequence stopped");
     }
 
     internal void RepeatSequence(List<NoteRecord> sequence)
     {
-        StartCoroutine(PlaySequenceFromList(sequence));
+        //StartCoroutine(PlaySequenceFromList(sequence));
+        
+        var sb = new StringBuilder();
+        sb.Append("m foo\n");
+        foreach (var note in sequence)
+        {
+            //PlayNote(note.Note, note.Velocity, note.Duration, note.ReverbAmount, note.StartTime);
+            var bpmScale = BPM / 60;
+            var octave = Math.Floor(note.Note / 12) + 2;
+            var id = played_notes[(int)note.Note];
+
+
+            var str = $"i1.{id} {note.StartTime.ToString(nfi)} {(note.Duration/ bpmScale).ToString(nfi)} {(octave + (note.Note % 12) / 100).ToString(nfi)} {note.Velocity.ToString(nfi)} {note.ReverbAmount.ToString(nfi)}";
+            sb.Append($"{str}\n");
+        }
+        sb.Append("s\n");
+        sb.Append("r 10 foo");
+        Debug.Log(sb);
+        
+        csound.SendScoreEvent(sb.ToString());
+
     }
 
     IEnumerator PlaySequence()
@@ -161,14 +191,14 @@ public class Sequencer : MonoBehaviour
         }
     }
 
-    void PlayNote(float note, float velocity, float secDuration = -1, float reverbWetAmount = 0f)
+    void PlayNote(float note, float velocity, float secDuration = -1, float reverbWetAmount = 0f, float startTime = 0f)
     {
         var bpmScale = BPM / 60;
         var octave = Math.Floor(note / 12) + 2;
         var id = played_notes[(int)note];
 
 
-        var str = $"i1.{id} 0 {(secDuration / bpmScale).ToString(nfi)} {(octave + (note % 12) / 100).ToString(nfi)} {velocity.ToString(nfi)} {reverbWetAmount.ToString(nfi)}";
+        var str = $"i1.{id} {startTime.ToString(nfi)} {(secDuration / bpmScale).ToString(nfi)} {(octave + (note % 12) / 100).ToString(nfi)} {velocity.ToString(nfi)} {reverbWetAmount.ToString(nfi)}";
         Debug.Log(str);
         csound.SendScoreEvent(str);
     }

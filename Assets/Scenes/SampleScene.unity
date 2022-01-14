@@ -520,30 +520,20 @@ PrefabInstance:
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
       propertyPath: _csoundString
-      value: "<CsoundSynthesizer>\r\n<CsOptions>\r\n-odac\r\n-+rtmidi=NULL -M0\r\n</CsOptions>\r\n<CsInstruments>\r\n;
+      value: "<CsoundSynthesizer>\r\n<CsOptions>\r\n-odac\r\n-n -d -+rtmidi=NULL
+        -M0 -m0d --midi-key-cps=4 --midi-velocity-amp=5\r\n</CsOptions>\r\n<CsInstruments>\r\n;
         Initialize the global variables. \r\nksmps = 32\r\nnchnls = 2\r\n0dbfs =
-        1\r\n\r\nga1 init 0 \r\n\r\n;instrument will be triggered by keyboard widget\r\ninstr
-        1\r\n    klfo line 0, 3, 20\r\n    al   lfo klfo, 5, 0\r\n    iwetamt = p6\r\n   
-        idryamt = 1 - p6 \r\n    ; //aOut poscil p5, cpspch(p4)+al, 1\r\n\r\n   
-        ;;;; START SETUP VIBRATO ;;;;;\r\n    kaverageamp     init .5\r\n    kaveragefreq   
-        init 5\r\n    krandamountamp  line 15, .01, 20\t\t\t;increase random amplitude
-        of vibrato\r\n    krandamountfreq init .3\r\n    kampminrate init 3\r\n   
-        kampmaxrate init 5\r\n    kcpsminrate init 3\r\n    kcpsmaxrate init 5\r\n   
-        kvib vibrato kaverageamp, kaveragefreq, krandamountamp, krandamountfreq,
-        kampminrate, kampmaxrate, kcpsminrate, kcpsmaxrate, 1\r\n    ;;;; END SETUP
-        VIBRATO ;;;;;\r\n\r\n\r\n    aOut poscil p5, cpspch(p4)+al, 1\r\n    ;print(al)\r\n   
-        ;aOut vco2 p5, cpspch(p4)\r\n    \r\n    kEnv madsr .1, .05, .6, .1\r\n   
-        \r\n    a1 clfilt aOut*kEnv, 500, 0, 10\r\n    \r\n    ;aFinal clip a1, 2,
-        0.1\r\n        ;outs aFinal*idryamt, aFinal*idryamt\r\n\r\n    outs a1*idryamt,
-        a1*idryamt\r\n    ; outs aOut*kEnv, aOut*kEnv\r\n\r\n    ga1 += a1 * iwetamt\r\n\r\nendin\r\n\r\n\r\ninstr
-        99\t;(highest instr number executed last)\r\n\r\n; arev reverb ga1, 2\r\n;    
-        outs arev, arev \r\n  \r\nkroomsize    init      0.85          ; room size
-        (range 0 to 1)\r\nkHFDamp      init      0.5           ; high freq. damping
-        (range 0 to 1)\r\n; create reverberated version of input signal (note stereo
-        input and output)\r\naRvbL,aRvbR  freeverb  ga1, ga1,kroomsize,kHFDamp\r\n            
-        outs      aRvbL, aRvbR ; send audio to outputs\r\nga1  = 0\t;clear\r\nendin\r\n\r\n</CsInstruments>\r\n<CsScore>\r\n;causes
-        Csound to run for about 7000 years...\r\nf0 z\r\nf 1 0 32768 10 1 ; create
-        sine wave table used by the vibrato\r\ni99 0 z\r\n</CsScore>\r\n</CsoundSynthesizer>"
+        1\r\n\r\nga1 init 0 \r\n;instrument will be triggered by keyboard widget\r\ninstr
+        1\r\n    ; klfo line 0, 3, 20\r\n    ; al   lfo klfo, 5, 0\r\n    \r\n   
+        ;aOut poscil p5, cpspch(p4), 1 ;+al, 1\r\n    ;print(al)\r\n    aOut vco2
+        p5, cpspch(p4)\r\n    \r\n    kEnv madsr 0.01, .05, .6, .1\r\n    \r\n   
+        ;a1 clfilt aOut*kEnv, 500, 0, 10\r\n    a1 clfilt aOut*kEnv, 500, 0, 10\r\n   
+        \r\n        outs a1, a1\r\n\r\n\r\n    ; outs aOut*kEnv, aOut*kEnv\r\n\r\n  
+        ; ga1 += a1 \r\n\r\nendin\r\n\r\n\r\n\r\n; instr 99\t;(highest instr number
+        executed last)\r\n\r\n; arev reverb ga1, 1\r\n;     outs arev, arev \r\n 
+        \r\n; ga1  = 0\t;clear\r\n; endin\r\n\r\n</CsInstruments>\r\n<CsScore>\r\n;causes
+        Csound to run for about 7000 years...\r\nf0 z\r\n\r\nf 1 0 32768 10 1\r\n;i99
+        0 z\r\n</CsScore>\r\n</CsoundSynthesizer>"
       objectReference: {fileID: 0}
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
@@ -563,7 +553,7 @@ PrefabInstance:
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
       propertyPath: _csoundFileName
-      value: SoftSynth.csd
+      value: HardSynth.csd
       objectReference: {fileID: 0}
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
