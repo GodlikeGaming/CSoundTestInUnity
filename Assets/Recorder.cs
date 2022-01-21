@@ -8,12 +8,14 @@ public class Recorder
     public List<NoteRecord> sequence = new List<NoteRecord>();
     public bool isRecording = false;
 
-    public float startTime = 0f;
+    public double startTime = 0f;
 
     public int quantFactor = 8;
 
+    public double BPM = 60;
+
     Dictionary<int, NoteRecord> playingNotes = new Dictionary<int, NoteRecord>();
-    public List<NoteRecord> HitRecord()
+    public Section HitRecord()
     {
         if (!isRecording)
         {
@@ -25,26 +27,27 @@ public class Recorder
         }
     }
 
-    private List<NoteRecord> StopRecording()
+    private Section StopRecording()
     {
         isRecording = false;
-        var time = Time.time - startTime;
-        var quantizedStartTime = (float)Math.Floor(time * quantFactor) / quantFactor;
-        sequence.Add(new NoteRecord(0, 0, 0, quantizedStartTime));
-        return sequence;
+        var endTime = AudioSettings.dspTime - startTime;
+        endTime *= BPM / 60;
+        var quantizedEndTime = (float)Math.Floor(endTime * quantFactor) / quantFactor;
+        return new Section() { Notes = sequence, EndTime = Math.Round(quantizedEndTime)};
     }
 
     private void StartRecording()
     {
         sequence.Clear();
-        startTime = Time.time;
+        startTime = AudioSettings.dspTime;
         isRecording = true;
     }
 
     internal void PlayNote(NoteRecord noteRecord)
     {
         if (!isRecording) return;
-        var currentTime = Time.time;
+        var currentTime = AudioSettings.dspTime;
+      
 
         var newNoteRecord = new NoteRecord(
             noteRecord.Note,
@@ -54,6 +57,7 @@ public class Recorder
             noteRecord.ReverbAmount
             );
 
+        newNoteRecord.StartTime *= BPM / 60;
         // APPLY QUANTIZATION TO START TIME
         var quantizedStartTime = (float)Math.Floor(newNoteRecord.StartTime * quantFactor) / quantFactor;
         newNoteRecord.StartTime = quantizedStartTime;
@@ -67,11 +71,11 @@ public class Recorder
     internal void StopNote(float note)
     {
         if (!isRecording) return;
-        var currentTime = Time.time;
+        var currentTime = AudioSettings.dspTime;
 
         var noteRecord = playingNotes[(int)note];
         noteRecord.Duration = (currentTime - startTime) - noteRecord.StartTime;
-
+        noteRecord.Duration *= BPM / 60;
         //APPLY QUANTIZATION TO DURATION
 
         var quantizedDuration = (float) Math.Round(noteRecord.Duration * quantFactor) / quantFactor;

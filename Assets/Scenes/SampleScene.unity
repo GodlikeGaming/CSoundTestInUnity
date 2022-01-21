@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &328908836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 328908835}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f18cf6a15a798454bb10fecc77acbf19, type: 3}
+  m_Script: {fileID: 11500000, guid: 333d802055e16ad4c8612ffc937ddaf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sequencerPrefab: {fileID: 1848315450108837193, guid: 26eaa2e942da4224aa5f00db63eeaedd,
@@ -420,38 +420,22 @@ PrefabInstance:
     - target: {fileID: 1848315450108837193, guid: 26eaa2e942da4224aa5f00db63eeaedd,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1848315450108837194, guid: 26eaa2e942da4224aa5f00db63eeaedd,
+        type: 3}
+      propertyPath: BPM
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 1848315450108837194, guid: 26eaa2e942da4224aa5f00db63eeaedd,
         type: 3}
       propertyPath: lst.Array.size
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1848315450108837195, guid: 26eaa2e942da4224aa5f00db63eeaedd,
-        type: 3}
-      propertyPath: _csoundString
-      value: "<CsoundSynthesizer>\r\n<CsOptions>\r\n-odac\r\n-+rtmidi=NULL -M0\r\n</CsOptions>\r\n<CsInstruments>\r\n;
-        Initialize the global variables. \r\nksmps = 32\r\nnchnls = 2\r\n0dbfs =
-        1\r\n\r\nga1 init 0 \r\n\r\n;instrument will be triggered by keyboard widget\r\ninstr
-        1\r\n    klfo line 0, 3, 20\r\n    al   lfo klfo, 5, 0\r\n    iwetamt = p6\r\n   
-        idryamt = 1 - p6 \r\n    //aOut poscil p5, cpspch(p4)+al, 1\r\n    aOut poscil
-        p5, cpspch(p4)+al, 1\r\n    ;print(al)\r\n    ;aOut vco2 p5, cpspch(p4)\r\n   
-        \r\n    kEnv madsr .1, .05, .6, .1\r\n    \r\n    a1 clfilt aOut*kEnv, 500,
-        0, 10\r\n    \r\n        outs a1*idryamt, a1*idryamt\r\n    ; outs aOut*kEnv,
-        aOut*kEnv\r\n\r\n    ga1 += a1 * iwetamt\r\n\r\nendin\r\n\r\n\r\ninstr 99\t;(highest
-        instr number executed last)\r\n\r\n; arev reverb ga1, 2\r\n;     outs arev,
-        arev \r\n  \r\nkroomsize    init      0.85          ; room size (range 0
-        to 1)\r\nkHFDamp      init      0.5           ; high freq. damping (range
-        0 to 1)\r\n; create reverberated version of input signal (note stereo input
-        and output)\r\naRvbL,aRvbR  freeverb  ga1, ga1,kroomsize,kHFDamp\r\n            
-        outs      aRvbL, aRvbR ; send audio to outputs\r\nga1  = 0\t;clear\r\nendin\r\n\r\n</CsInstruments>\r\n<CsScore>\r\n;causes
-        Csound to run for about 7000 years...\r\nf0 z\r\nf 1 0 32768 10 1\r\ni99
-        0 z\r\n</CsScore>\r\n</CsoundSynthesizer>"
-      objectReference: {fileID: 0}
     - target: {fileID: 1848315450108837197, guid: 26eaa2e942da4224aa5f00db63eeaedd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1848315450108837197, guid: 26eaa2e942da4224aa5f00db63eeaedd,
         type: 3}
@@ -505,6 +489,193 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26eaa2e942da4224aa5f00db63eeaedd, type: 3}
+--- !u!1 &1743153676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1743153678}
+  - component: {fileID: 1743153677}
+  - component: {fileID: 1743153680}
+  - component: {fileID: 1743153679}
+  m_Layer: 0
+  m_Name: CSoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1743153677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743153676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 794a299aa2dc9e24b9118889529c6e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1743153678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743153676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1743153679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743153676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d20258c641c94f0ea3dc32cfe3de904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logCsoundOutput: 0
+  mute: 0
+  processClipAudio: 0
+  loudVolumeWarning: 1
+  loudWarningThreshold: 10
+  csoundScore: 
+  _csoundFileGUID: 7617f45d36f2ca240a810a521f5c81e8
+  _csoundString: "<CsoundSynthesizer>\r\n<CsOptions>\r\n-odac\r\n-+rtmidi=NULL -M0\r\n</CsOptions>\r\n<CsInstruments>\r\n;
+    Initialize the global variables. \r\nksmps = 32\r\nnchnls = 2\r\n0dbfs = 1\r\n\r\nga1
+    init 0 \r\n;instrument will be triggered by keyboard widget\r\ninstr 1\r\n   
+    ; klfo line 0, 3, 20\r\n    ; al   lfo klfo, 5, 0\r\n    klfo line 0, 3, 20\r\n   
+    al   lfo klfo, 5, 0\r\n    iwetamt = p6\r\n    idryamt = 1 - p6\r\n    ;aOut
+    poscil p5, cpspch(p4), 1 ;+al, 1\r\n    ;print(al)\r\n    aOut vco2 p5, cpspch(p4)\r\n   
+    \r\n    kEnv madsr 0.01, .05, .6, .1\r\n    \r\n    ;a1 clfilt aOut*kEnv, 500,
+    0, 10\r\n    a1 clfilt aOut*kEnv, 500, 0, 10\r\n    \r\n    outs a1*idryamt,
+    a1*idryamt\r\n\r\n\r\n    ; outs aOut*kEnv, aOut*kEnv\r\n\r\n    ga1 += a1 *
+    iwetamt\r\n\r\nendin\r\n\r\n\r\n\r\ninstr 99\t;(highest instr number executed
+    last)\r\n\r\n; arev reverb ga1, 2\r\n;     outs arev, arev \r\n  \r\nkroomsize   
+    init      0.85          ; room size (range 0 to 1)\r\nkHFDamp      init     
+    0.5           ; high freq. damping (range 0 to 1)\r\n; create reverberated version
+    of input signal (note stereo input and output)\r\naRvbL,aRvbR  freeverb  ga1,
+    ga1,kroomsize,kHFDamp\r\n             outs      aRvbL, aRvbR ; send audio to
+    outputs\r\nga1  = 0\t;clear\r\nendin\r\n\r\n</CsInstruments>\r\n<CsScore>\r\n;causes
+    Csound to run for about 7000 years...\r\nf0 z\r\nf 1 0 32768 10 1 ; create sine
+    wave table used by the vibrato\r\ni99 0 z\r\n</CsScore>\r\n</CsoundSynthesizer>"
+  _csoundFileName: HardSynth.csd
+  _csoundAsset: {fileID: 102900000, guid: 7617f45d36f2ca240a810a521f5c81e8, type: 3}
+  _channels: []
+  _availableAudioChannels: []
+  _drawCsoundString: 0
+  _drawTestScore: 0
+  _drawSettings: 0
+  _drawChannels: 0
+  _drawAudioChannels: 0
+--- !u!82 &1743153680
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743153676}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &944181530489157228
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -520,20 +691,30 @@ PrefabInstance:
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
       propertyPath: _csoundString
-      value: "<CsoundSynthesizer>\r\n<CsOptions>\r\n-odac\r\n-n -d -+rtmidi=NULL
-        -M0 -m0d --midi-key-cps=4 --midi-velocity-amp=5\r\n</CsOptions>\r\n<CsInstruments>\r\n;
+      value: "<CsoundSynthesizer>\r\n<CsOptions>\r\n-odac\r\n-+rtmidi=NULL -M0\r\n</CsOptions>\r\n<CsInstruments>\r\n;
         Initialize the global variables. \r\nksmps = 32\r\nnchnls = 2\r\n0dbfs =
-        1\r\n\r\nga1 init 0 \r\n;instrument will be triggered by keyboard widget\r\ninstr
-        1\r\n    ; klfo line 0, 3, 20\r\n    ; al   lfo klfo, 5, 0\r\n    \r\n   
-        ;aOut poscil p5, cpspch(p4), 1 ;+al, 1\r\n    ;print(al)\r\n    aOut vco2
-        p5, cpspch(p4)\r\n    \r\n    kEnv madsr 0.01, .05, .6, .1\r\n    \r\n   
-        ;a1 clfilt aOut*kEnv, 500, 0, 10\r\n    a1 clfilt aOut*kEnv, 500, 0, 10\r\n   
-        \r\n        outs a1, a1\r\n\r\n\r\n    ; outs aOut*kEnv, aOut*kEnv\r\n\r\n  
-        ; ga1 += a1 \r\n\r\nendin\r\n\r\n\r\n\r\n; instr 99\t;(highest instr number
-        executed last)\r\n\r\n; arev reverb ga1, 1\r\n;     outs arev, arev \r\n 
-        \r\n; ga1  = 0\t;clear\r\n; endin\r\n\r\n</CsInstruments>\r\n<CsScore>\r\n;causes
-        Csound to run for about 7000 years...\r\nf0 z\r\n\r\nf 1 0 32768 10 1\r\n;i99
-        0 z\r\n</CsScore>\r\n</CsoundSynthesizer>"
+        1\r\n\r\nga1 init 0 \r\n\r\n;instrument will be triggered by keyboard widget\r\ninstr
+        1\r\n    klfo line 0, 3, 20\r\n    al   lfo klfo, 5, 0\r\n    iwetamt = p6\r\n   
+        idryamt = 1 - p6 \r\n    ; //aOut poscil p5, cpspch(p4)+al, 1\r\n\r\n   
+        ;;;; START SETUP VIBRATO ;;;;;\r\n    ; kaverageamp     init .5\r\n    ;
+        kaveragefreq    init 5\r\n    ; krandamountamp  line 15, .01, 20\t\t\t;increase
+        random amplitude of vibrato\r\n    ; krandamountfreq init .3\r\n    ; kampminrate
+        init 3\r\n    ; kampmaxrate init 5\r\n    ; kcpsminrate init 3\r\n    ; kcpsmaxrate
+        init 5\r\n    ; kvib vibrato kaverageamp, kaveragefreq, krandamountamp, krandamountfreq,
+        kampminrate, kampmaxrate, kcpsminrate, kcpsmaxrate, 1\r\n    ;;;; END SETUP
+        VIBRATO ;;;;;\r\n\r\n\r\n    aOut poscil p5, cpspch(p4)+al, 1\r\n    ;print(al)\r\n   
+        ;aOut vco2 p5, cpspch(p4)\r\n    \r\n    kEnv madsr .1, .05, .6, .1\r\n   
+        \r\n    a1 clfilt aOut*kEnv, 500, 0, 10\r\n    \r\n    ;aFinal clip a1, 2,
+        0.1\r\n        ;outs aFinal*idryamt, aFinal*idryamt\r\n\r\n    outs a1*idryamt,
+        a1*idryamt\r\n    ; outs aOut*kEnv, aOut*kEnv\r\n\r\n    ga1 += a1 * iwetamt\r\n\r\nendin\r\n\r\n\r\ninstr
+        99\t;(highest instr number executed last)\r\n\r\n; arev reverb ga1, 2\r\n;    
+        outs arev, arev \r\n  \r\nkroomsize    init      0.85          ; room size
+        (range 0 to 1)\r\nkHFDamp      init      0.5           ; high freq. damping
+        (range 0 to 1)\r\n; create reverberated version of input signal (note stereo
+        input and output)\r\naRvbL,aRvbR  freeverb  ga1, ga1,kroomsize,kHFDamp\r\n            
+        outs      aRvbL, aRvbR ; send audio to outputs\r\nga1  = 0\t;clear\r\nendin\r\n\r\n</CsInstruments>\r\n<CsScore>\r\n;causes
+        Csound to run for about 7000 years...\r\nf0 z\r\nf 1 0 32768 10 1 ; create
+        sine wave table used by the vibrato\r\ni99 0 z\r\n</CsScore>\r\n</CsoundSynthesizer>"
       objectReference: {fileID: 0}
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
@@ -553,7 +734,7 @@ PrefabInstance:
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
       propertyPath: _csoundFileName
-      value: HardSynth.csd
+      value: SoftSynth.csd
       objectReference: {fileID: 0}
     - target: {fileID: 944181529585720524, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
@@ -645,6 +826,12 @@ PrefabInstance:
       propertyPath: reverbWetAmount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 944181529585720527, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
+        type: 3}
+      propertyPath: sequencerPrefab
+      value: 
+      objectReference: {fileID: 1848315450108837193, guid: 26eaa2e942da4224aa5f00db63eeaedd,
+        type: 3}
     - target: {fileID: 944181529585720563, guid: 8d7f70dc74dbcbe4fbcf5dcb0389461c,
         type: 3}
       propertyPath: m_Name
