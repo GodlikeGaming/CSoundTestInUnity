@@ -108,6 +108,10 @@ public class SynthController : MonoBehaviour
         checkForKey(Key.U, 10);
         checkForKey(Key.J, 11);
         checkForKey(Key.K, 12);
+        checkForKey(Key.O, 13);
+        checkForKey(Key.L, 14);
+        checkForKey(Key.P, 15);
+        checkForKey(Key.Semicolon, 16);
         //checkForKey(KeyCode.A, 0);
         //checkForKey(KeyCode.A, 0);
 
@@ -122,7 +126,7 @@ public class SynthController : MonoBehaviour
         //        StopNote(i);
         //    }
         //}
-       // myAction.Enable();
+        // myAction.Enable();
     }
     void checkForKey(Key code, float note)
     {

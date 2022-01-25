@@ -65,4 +65,16 @@ public class CSoundManager : MonoBehaviour
         if (debugNotesPlayed) Debug.Log(str);
         csound.SendScoreEvent(str);
     }
+
+    public void PlayNoteRealtime(float note, float velocity, float duration)
+    {
+        float secDuration = -1f;
+
+        var octave = Math.Floor(note / 12) + 2;
+
+
+        var str = $"i1.{180} 0 {(secDuration).ToString(nfi)} {(octave + (note % 12) / 100).ToString(nfi)} {velocity.ToString(nfi)}";
+        Debug.Log(str);
+        csound.SendScoreEvent(str);
+    }
 }

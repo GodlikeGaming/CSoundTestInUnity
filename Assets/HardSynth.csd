@@ -20,14 +20,16 @@ instr 1
     idryamt = 1 - p6
     ;aOut poscil p5, cpspch(p4), 1 ;+al, 1
     ;print(al)
-    aOut vco2 p5, cpspch(p4)
+    aOut poscil p5, cpspch(p4)
     
     kEnv madsr 0.01, .05, .6, .1
     
+    a1 clfilt aOut, 500, 0, 10
     ;a1 clfilt aOut*kEnv, 500, 0, 10
-    a1 clfilt aOut*kEnv, 500, 0, 10
     
-    outs a1*idryamt, a1*idryamt
+    outs aOut*kEnv*idryamt, aOut*kEnv*idryamt
+
+    ;outs a1*idryamt, a1*idryamt
 
 
     ; outs aOut*kEnv, aOut*kEnv
