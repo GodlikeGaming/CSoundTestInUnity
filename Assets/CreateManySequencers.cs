@@ -37,8 +37,7 @@ public class CreateManySequencers : MonoBehaviour
             },
             EndTime = 6f
         });
-
-        CreateSequencer(new Section()
+        var sec = new Section()
         {
             Notes = new List<NoteRecord>()
             {
@@ -48,35 +47,38 @@ public class CreateManySequencers : MonoBehaviour
                 new NoteRecord(83, 1/8f, 0.2, 3/8f),
                 new NoteRecord(84, 1/8f, 0.2, 4/8f),
 
-                new NoteRecord(79, 1/8f, 0.2, 2.25f),
-                new NoteRecord(79, 1/8f, 0.2, 2.5f),
-                new NoteRecord(77, 1/8f, 0.2, 2.75f),
-                new NoteRecord(77, 1/8f, 0.2, 3f),
-                new NoteRecord(76, 1/8f, 0.2, 3.25f),
-                new NoteRecord(76, 1/8f, 0.2, 3.5f),
+                new NoteRecord(79, 1/8f, 0.2, 2.25f, 0.0f),
+                new NoteRecord(79, 1/8f, 0.2, 2.5f, 0.0f),
+                new NoteRecord(77, 1/8f, 0.2, 2.75f, 0.0f),
+                new NoteRecord(77, 1/8f, 0.2, 3f, 0.0f),
+                new NoteRecord(76, 1/8f, 0.2, 3.25f, 0.0f),
+                new NoteRecord(76, 1/8f, 0.2, 3.5f, 0.0f),
             },
             EndTime = 4f
-        });
+        };
 
-        CreateSequencer(new Section()
-        {
-            Notes = new List<NoteRecord>()
-            {
-                new NoteRecord(79, 0.2f, 0.2, 0),
-                new NoteRecord(81, 1/8f, 0.2, 1/8f),
-                new NoteRecord(79, 1/8f, 0.2, 2/8f),
-                new NoteRecord(76, 1/8f, 0.2, 3/8f),
-                new NoteRecord(79, 1/8f, 0.2, 4/8f),
+        sec.Transpose(-1f);
+        CreateSequencer(sec);
 
-                new NoteRecord(76, 1/8f, 0.2, 2.25f),
-                new NoteRecord(76, 1/8f, 0.2, 2.5f),
-                new NoteRecord(74, 1/8f, 0.2, 2.75f),
-                new NoteRecord(74, 1/8f, 0.2, 3f),
-                new NoteRecord(72, 1/8f, 0.2, 3.25f),
-                new NoteRecord(72, 1/8f, 0.2, 3.5f),
-            },
-            EndTime = 4f
-        });
+        //CreateSequencer(new Section()
+        //{
+        //    Notes = new List<NoteRecord>()
+        //    {
+        //        new NoteRecord(79, 0.2f, 0.2, 0),
+        //        new NoteRecord(81, 1/8f, 0.2, 1/8f),
+        //        new NoteRecord(79, 1/8f, 0.2, 2/8f),
+        //        new NoteRecord(76, 1/8f, 0.2, 3/8f),
+        //        new NoteRecord(79, 1/8f, 0.2, 4/8f),
+
+        //        new NoteRecord(76, 1/8f, 0.2, 2.25f),
+        //        new NoteRecord(76, 1/8f, 0.2, 2.5f),
+        //        new NoteRecord(74, 1/8f, 0.2, 2.75f),
+        //        new NoteRecord(74, 1/8f, 0.2, 3f),
+        //        new NoteRecord(72, 1/8f, 0.2, 3.25f),
+        //        new NoteRecord(72, 1/8f, 0.2, 3.5f),
+        //    },
+        //    EndTime = 4f
+        //});
     }
 
     private void CreateSequencer(Section section)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,12 @@ public class NoteRecord
     /// In beats, need to be multiplied with BPM to get in seconds
     /// </summary>
     public double Duration { get; set; }
+
+    internal void Transpose(float v)
+    {
+        Note += v * MusicTheory.OCTAVE;
+    }
+
     /// <summary>
     /// In beats, needs to be multiplied with BPM to get in seconds
     /// </summary>
