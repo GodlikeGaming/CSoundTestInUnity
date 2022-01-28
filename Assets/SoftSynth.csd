@@ -15,7 +15,23 @@ ga1 init 0
 instr 1
     klfo line 0, 3, 20
     al   lfo klfo, 5, 0
-    
+    iwetamt = p6
+    idryamt = 1 - p6 
+    ; //aOut poscil p5, cpspch(p4)+al, 1
+
+    ;;;; START SETUP VIBRATO ;;;;;
+    ; kaverageamp     init .5
+    ; kaveragefreq    init 5
+    ; krandamountamp  line 15, .01, 20			;increase random amplitude of vibrato
+    ; krandamountfreq init .3
+    ; kampminrate init 3
+    ; kampmaxrate init 5
+    ; kcpsminrate init 3
+    ; kcpsmaxrate init 5
+    ; kvib vibrato kaverageamp, kaveragefreq, krandamountamp, krandamountfreq, kampminrate, kampmaxrate, kcpsminrate, kcpsmaxrate, 1
+    ;;;; END SETUP VIBRATO ;;;;;
+
+
     aOut poscil p5, cpspch(p4)+al, 1
     ;print(al)
     ;aOut vco2 p5, cpspch(p4)
@@ -24,27 +40,35 @@ instr 1
     
     a1 clfilt aOut*kEnv, 500, 0, 10
     
-        outs a1, a1
+    ;aFinal clip a1, 2, 0.1
+        ;outs aFinal*idryamt, aFinal*idryamt
+
+    outs a1*idryamt, a1*idryamt
     ; outs aOut*kEnv, aOut*kEnv
 
-    ga1 += a1 
+    ga1 += a1 * iwetamt
 
 endin
 
 
-; instr 99	;(highest instr number executed last)
+instr 99	;(highest instr number executed last)
 
-; arev reverb ga1, 1
+; arev reverb ga1, 2
 ;     outs arev, arev 
   
-; ga1  = 0	;clear
-; endin
+kroomsize    init      0.85          ; room size (range 0 to 1)
+kHFDamp      init      0.5           ; high freq. damping (range 0 to 1)
+; create reverberated version of input signal (note stereo input and output)
+aRvbL,aRvbR  freeverb  ga1, ga1,kroomsize,kHFDamp
+             outs      aRvbL, aRvbR ; send audio to outputs
+ga1  = 0	;clear
+endin
 
 </CsInstruments>
 <CsScore>
 ;causes Csound to run for about 7000 years...
 f0 z
-f 1 0 32768 10 1
+f 1 0 32768 10 1 ; create sine wave table used by the vibrato
 i99 0 z
 </CsScore>
 </CsoundSynthesizer>

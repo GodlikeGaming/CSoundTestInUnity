@@ -26,35 +26,29 @@ public class SynthController : MonoBehaviour
 
 
     //public List<int> played_notes = new List<int>();
+    public float velocity = 0.5f;
+    public float reverbWetAmount = 0.2f;
     public Dictionary<int, int> played_notes = new Dictionary<int, int>();
-    CsoundUnity csound;
+    CSoundManager cSoundManager;
     NumberFormatInfo nfi;
 
     List<InputAction> keyActions = new List<InputAction>();
+    public Recorder recorder = new Recorder();
+    public GameObject sequencerPrefab;
+
     private void Start()
     {
-        var UUID = 0;
-        for (int i = 0; i < 127; i++)
-        {
-            played_notes[i] = (UUID++);
-        }
+        
 
         for (int i = 0; i < frequencies.Length; i++)
         {
             frequencies[i] /= 8;
         }
 
-        nfi = new NumberFormatInfo();
-        nfi.NumberDecimalSeparator = ".";
 
-        csound = GetComponent<CsoundUnity>();
+        cSoundManager = FindObjectOfType<CSoundManager>();
 
         
-        if (!csound.CompiledWithoutError())
-        {
-            Debug.Log(csound.GetSpout());
-        }
-
         for (int i = 21; i < 127; i++)
         {
             var stringOfNote = i / 100 >= 1 ? $"{i}" : $"0{i}";
@@ -64,10 +58,11 @@ public class SynthController : MonoBehaviour
             {
                 // play note
                 var note = int.Parse(ctx.control.name.Substring(4, 3));
-                var velocity = (float)ctx.ReadValueAsObject();
+                //var velocity = (float)ctx.ReadValueAsObject();
 
                 Debug.Log($"start {note} with v: {velocity}");
-                PlayNote(note, velocity);
+                NoteRecord noteRecord = new NoteRecord(note, velocity, -1, 0, reverbWetAmount);
+                PlayNote(noteRecord);
             };
             myAction.canceled += ctx =>
             {
@@ -81,9 +76,24 @@ public class SynthController : MonoBehaviour
             keyActions.Add(myAction);
         }
     }
+
+
     void Update()
     {
 
+        if (Keyboard.current[Key.R].wasPressedThisFrame)
+        {
+            Debug.Log("Hit record button");
+            var section = recorder.HitRecord();
+
+            if (section != null)
+            {
+                // create a sequencer and update its section to this
+                // globalSequencer.RepeatSequence(sequence);
+                var sequencer = Instantiate(sequencerPrefab);
+                sequencer.GetComponent<Sequencer>().SetSection(section); 
+            }
+        }
 
         checkForKey(Key.A, 0);
         checkForKey(Key.W, 1);
@@ -98,6 +108,10 @@ public class SynthController : MonoBehaviour
         checkForKey(Key.U, 10);
         checkForKey(Key.J, 11);
         checkForKey(Key.K, 12);
+        checkForKey(Key.O, 13);
+        checkForKey(Key.L, 14);
+        checkForKey(Key.P, 15);
+        checkForKey(Key.Semicolon, 16);
         //checkForKey(KeyCode.A, 0);
         //checkForKey(KeyCode.A, 0);
 
@@ -112,14 +126,15 @@ public class SynthController : MonoBehaviour
         //        StopNote(i);
         //    }
         //}
-       // myAction.Enable();
+        // myAction.Enable();
     }
     void checkForKey(Key code, float note)
     {
-        note += 12 * 5;
+        note += 12 * 6;
         if (Keyboard.current[code].wasPressedThisFrame)
         {
-            PlayNote(note, 0.5f);
+            NoteRecord noteRecord = new NoteRecord(note, velocity, -1, 0, reverbWetAmount);
+            PlayNote(noteRecord);
             //csound.Se
         }
         if (Keyboard.current[code].wasReleasedThisFrame)
@@ -128,20 +143,16 @@ public class SynthController : MonoBehaviour
         }
     }
 
-    void PlayNote(float note, float velocity)
+    void PlayNote(NoteRecord noteRecord)
     {
-        var octave = Math.Floor(note / 12) + 2;
-        var id = played_notes[(int)note];
-        var str = $"i1.{id} 0 -1 {(octave + (note % 12) / 100).ToString(nfi)} {velocity.ToString(nfi)} 1";
-        Debug.Log(str);
-        csound.SendScoreEvent(str);
+        // record note
+        recorder.PlayNote(noteRecord);
+        cSoundManager.PlayNote(noteRecord);
     }
 
     void StopNote(float note)
     {
-        var id = played_notes[(int)note];
-        var str = $"i-1.{id} 0 1 {(8.0f + (note % 12) / 100).ToString(nfi)} 0.1 0";
-        Debug.Log(str);
-        csound.SendScoreEvent(str);
+        recorder.StopNote(note);
+        cSoundManager.StopNote(note);
     }
 }
